@@ -1,0 +1,33 @@
+.Tool{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 90%;
+  padding: 3% 5% 3% 5%;
+  margin-bottom: 5px;
+  background-color: #fff;
+}
+.toolHeader{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.toolTitle{
+  color: #365DF0;
+  text-decoration: underline;
+  display: flexbox;
+  cursor: pointer;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.removeBut{
+  display: flexbox;
+  cursor: pointer;
+  font-weight: bolder;
+}
+.toolDescription p{
+  text-align: initial;
+}
+.toolTags p{
+  text-align: initial;
+}
