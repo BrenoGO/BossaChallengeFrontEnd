@@ -1,42 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './addModal.css';
 import { ToolsService } from '../services/ToolsService';
 
-export default class components extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      title: '',
-      link: '',
-      description: '',
-      tags: ''
-    }
-    this.handleCloseBut = this.handleCloseBut.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+export default function AddModal(props){
+  const [inputs, setInputs] = useState({
+    title: '',
+    link: '',
+    description: '',
+    tags:''
+  });
+
+  function handleCloseBut() {
+    props.changeFunction();
   }
-  handleCloseBut(){
-    this.props.changeFunction();
-  }
-  handleChange(event){
+  function handleChange(event){
     const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    })
+    setInputs({...inputs, [name]: value});
   }
-  async handleSubmit(event){
-    console.log('entrou no handleSubmit');
-    const { state } = this;
+  async function handleSubmit(event){
     event.preventDefault();
-    const tags = state.tags.split(/\s+/);
-    if(state.title && state.description && state.link){
-      const tool = await ToolsService.create({...state, tags });
-      console.log('tool:', tool);
+    const tags = inputs.tags.split(/\s+/);
+    if(inputs.title && inputs.description && inputs.link){
+      const tool = await ToolsService.create({...inputs, tags });
       if(tool.err){
         alert(tool.err);
       }else{
-        this.props.addTool(tool);
-        this.setState({
+        props.addTool(tool);
+        setInputs({
           title: '',
           link: '',
           description: '',
@@ -47,32 +37,30 @@ export default class components extends Component {
       alert('Preencha todos os campos obrigatórios');
     }
   }
-  render() {
-    const { state } = this;
-    return (
+  return (
     <div>
       <div id="backDrop"></div>
       <div id="addModal">
         <div id="headerModal">
           <h1 id="modalTitle">+ Add new tool</h1>
-          <span id="closeModalBut" onClick={this.handleCloseBut}>X</span>
+          <span id="closeModalBut" onClick={handleCloseBut}>X</span>
         </div>
-        <form id="addToolForm" onSubmit={this.handleSubmit}>
+        <form id="addToolForm" onSubmit={handleSubmit}>
         <label className="labels">
           <span>Tool Name * </span>
-          <input type="text" className="addFormInput" onChange={this.handleChange} name="title" value={state.title}/>
+          <input type="text" className="addFormInput" onChange={handleChange} name="title" value={inputs.title}/>
         </label>
         <label className="labels">
           <span>Tool Link *</span>
-          <input type="text" className="addFormInput" onChange={this.handleChange} name="link" value={state.link}/>
+          <input type="text" className="addFormInput" onChange={handleChange} name="link" value={inputs.link}/>
         </label>
         <label className="labels">
           <span>Tool Description *</span>
-          <textarea rows="4" className="addFormInput" onChange={this.handleChange} name="description" value={state.description} />
+          <textarea rows="4" className="addFormInput" onChange={handleChange} name="description" value={inputs.description} />
         </label>
         <label className="labels">
           <span>Tags</span>
-          <input type="text" className="addFormInput" onChange={this.handleChange} name="tags" value={state.tags}/>
+          <input type="text" className="addFormInput" onChange={handleChange} name="tags" value={inputs.tags}/>
         </label>
         <div id="divAddBut">
           <button type="submit" id="submitAddBut">Add tool</button>
@@ -80,6 +68,5 @@ export default class components extends Component {
         </form>
       </div>
     </div>
-    );
-  }
+  );
 }
