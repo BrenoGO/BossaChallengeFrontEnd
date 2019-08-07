@@ -6,28 +6,28 @@ import { ToolsService } from './services/ToolsService';
 import AddModal from './components/AddModal';
 import Tool from './components/Tool';
 
-export default function App(){
+export default function App() {
   const [loginData, setLoginData] = useState({
     name: '',
     password: '',
     logged: false
-  })  
+  });
   const [connected, setConnected] = useState(true);
   const [tools, setTools] = useState([]);
   const [searchedTag, setSearchedTag] = useState('');
   const [boolCheckSearchTag, setBoolCheckSearchTag] = useState(false);
   const [boolAddModal, setBoolAddModal] = useState(false);
-    
+
   useEffect(() => {
     const logged = localStorage.getItem('token@bossabox');
     const name = localStorage.getItem('name@bossabox') ? localStorage.getItem('name@bossabox') : '';
-    setLoginData({password: '', logged, name});
+    setLoginData({ password: '', logged, name });
     ToolsService.list()
       .then(resp => {
         if (resp.err) {
           setConnected(false);
         } else {
-          setTools(resp)
+          setTools(resp);
         }
       });
   }, []);
@@ -55,25 +55,25 @@ export default function App(){
 
   async function handleSearchChange(event) {
     const { name, value } = event.target;
-    let tools = [];
+    let newTools = [];
     if (name === 'searchedTag') {
       setSearchedTag(value);
       if (value === '') {
-        tools = await ToolsService.list();
+        newTools = await ToolsService.list();
         setBoolCheckSearchTag(false);
       } else {
-        tools = await ToolsService.searchTag(value);
+        newTools = await ToolsService.searchTag(value);
         setBoolCheckSearchTag(true);
       }
-      return setTools(tools);
+      return setTools(newTools);
     }// name === 'checkSearchTag' - checkbox clicked
     setBoolCheckSearchTag(!boolCheckSearchTag);
     if (!boolCheckSearchTag) { // check is false
-      tools = await ToolsService.list(); //get all
+      newTools = await ToolsService.list(); // get all
     } else if (searchedTag) { // check were false, became true, and searchedTag isnt ''
-      tools = await ToolsService.searchTag(searchedTag);
+      newTools = await ToolsService.searchTag(searchedTag);
     }
-    return setTools(tools);
+    return setTools(newTools);
   }
 
   function changeBoolAddModal() {
