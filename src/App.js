@@ -12,8 +12,8 @@ export default function App() {
     password: '',
     logged: false
   });
-  const [connected, setConnected] = useState(true);
   const [tools, setTools] = useState([]);
+  const [connected, setConnected] = useState(true);
   const [searchedTag, setSearchedTag] = useState('');
   const [boolCheckSearchTag, setBoolCheckSearchTag] = useState(false);
   const [boolAddModal, setBoolAddModal] = useState(false);
@@ -89,22 +89,6 @@ export default function App() {
     setTools(tools.filter(tool => tool.id !== toolId));
   }
 
-  function showModal() {
-    if (boolAddModal) {
-      return (
-        <AddModal changeFunction={changeBoolAddModal} addTool={addTool} />
-      );
-    }
-    return false;
-  }
-
-  function isNotConnected() {
-    if (!connected) {
-      return <h2>No server connection</h2>;
-    }
-    return false;
-  }
-
   function loginArea() {
     const { logged, name, password } = loginData;
     if (!logged) {
@@ -148,8 +132,12 @@ export default function App() {
         </div>
       </div>
       <div id="body">
-        {showModal()}
-        {isNotConnected()}
+        { boolAddModal && (
+          <AddModal changeFunction={changeBoolAddModal} addTool={addTool} />
+        )}
+        {!connected && (
+          <h2>No server connection</h2>
+        )}
         <div id="list">
           {
             tools.map(
