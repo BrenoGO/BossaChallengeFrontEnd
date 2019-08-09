@@ -1,6 +1,4 @@
-
-const api = 'https://bossabox-challenge-backend.herokuapp.com/';
-// const api = 'http://localhost:3001/';
+const api = process.env.REACT_APP_API_URL;
 
 export const ApiService = {
   get(endpoint) {
