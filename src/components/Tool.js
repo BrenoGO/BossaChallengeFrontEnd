@@ -25,7 +25,7 @@ const Tool = props => {
     <>
       { boolError && (
         <ErrorModal title="Unauthorized" buttonMessage="Understood" close={closeError}>
-          You can&apos; remove a tool while unauthenticated. Please Log In.
+          You can&apos;t remove a tool while unauthenticated. Please Log In.
         </ErrorModal>
       )}
       <div className="Tool">

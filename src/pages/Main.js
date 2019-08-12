@@ -80,7 +80,7 @@ export default function App() {
     <>
       { boolError && (
       <ErrorModal title="Unauthorized" buttonMessage="Understood" close={closeError}>
-        You can&apos; add a tool while unauthenticated. Please Log In.
+        You can&apos;t add a tool while unauthenticated. Please Log In.
       </ErrorModal>
       )}
       <div id="Main">
