@@ -1,48 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { ToolsService } from '../services/ToolsService';
 
+import ErrorModal from './ErrorModal';
 import './Tool.css';
 
 const Tool = props => {
   const { tool, searchedTag } = props;
+  const [boolError, setBoolError] = useState(false);
+  const { boolLogged } = useSelector(state => state.LoginReducer);
 
   async function removeTool() {
-    ToolsService.remove(tool.id)
-      .then((res) => {
-        if (res.err) {
-          if (res.err.toString().match(/authorized/i)) {
-            alert('É necessário estar logado para remover uma ferramenta');
-          } else {
-            alert(res.err);
-          }
-        } else {
-          props.removeTool(tool.id);
-        }
-      });
+    if (!boolLogged) {
+      return setBoolError(true);
+    }
+    ToolsService.remove(tool.id);
+    return props.removeTool(tool.id);
+  }
+  function closeError() {
+    setBoolError(false);
   }
 
   return (
-    <div className="Tool" key={tool._id}>
-      <div className="toolHeader">
-        <a href={tool.link} target="_blank" rel="noopener noreferrer">
-          <h3 className="toolTitle">{tool.title}</h3>
-        </a>
-        <span className="removeBut" onClick={removeTool}>X remove</span>
+    <>
+      { boolError && (
+        <ErrorModal title="Unauthorized" buttonMessage="Understood" close={closeError}>
+          You can&apos; remove a tool while unauthenticated. Please Log In.
+        </ErrorModal>
+      )}
+      <div className="Tool">
+        <div className="toolHeader">
+          <a href={tool.link} target="_blank" rel="noopener noreferrer">
+            <h3 className="toolTitle">{tool.title}</h3>
+          </a>
+          <button className="removeBut but-secondary-danger" onClick={removeTool}><span className="symbolInButton">x</span>Remove</button>
+        </div>
+        <div className="toolDescription">
+          <p>{tool.description}</p>
+        </div>
+        <div className="toolTags">
+          <p>
+            {tool.tags.map((tag, index) => {
+              if (searchedTag === tag) {
+                return <strong key={index}><mark>#{tag}</mark> </strong>;
+              }
+              return <strong key={index}>#{tag} </strong>;
+            })}
+          </p>
+        </div>
       </div>
-      <div className="toolDescription">
-        <p>{tool.description}</p>
-      </div>
-      <div className="toolTags">
-        <p>
-          {tool.tags.map((tag, index) => {
-            if (searchedTag === tag) {
-              return <strong key={index}><mark>#{tag}</mark> </strong>;
-            }
-            return <strong key={index}>#{tag} </strong>;
-          })}
-        </p>
-      </div>
-    </div>
+    </>
   );
 };
 

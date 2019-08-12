@@ -1,0 +1,19 @@
+#header{
+  display: flex;
+  justify-content: space-around;
+}
+#header #titles {
+  display: flex;
+  flex-direction: column;
+}
+header h1, h2 {
+  text-align: initial;
+}
+#logDiv {
+  margin-top: 20px;
+}
+#rightHead{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

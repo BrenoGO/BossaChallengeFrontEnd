@@ -1,11 +1,13 @@
 .Tool{
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  padding: 10px;
+  box-shadow: 0px 10px 10px rgba(0,0,0,0.05);
+  border-radius: 5px;
+  border: 1px solid #EBEAED;
   width: 90%;
-  padding: 3% 5% 3% 5%;
   margin-bottom: 5px;
-  background-color: #fff;
+  background-color: #FFF;
 }
 .toolHeader{
   display: flex;
@@ -14,16 +16,10 @@
 }
 .toolTitle{
   color: #365DF0;
-  text-decoration: underline;
-  display: flexbox;
+  text-decoration: none;
   cursor: pointer;
   margin-top: 0;
   margin-bottom: 0;
-}
-.removeBut{
-  display: flexbox;
-  cursor: pointer;
-  font-weight: bolder;
 }
 .toolDescription p{
   text-align: initial;

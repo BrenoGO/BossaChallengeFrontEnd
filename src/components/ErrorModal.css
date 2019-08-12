@@ -1,0 +1,27 @@
+#errorModal{
+  border: 1px solid black;
+  z-index: 2;
+  background-color: #fff;
+  position: fixed;
+  width: 400px;
+  top: 20%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+#headerErrorModal{
+  display: flex;
+  justify-content: space-between;
+}
+#errorBody{
+  display: flex;
+  flex-direction: column;
+}
+#errorBody button {
+  width: 174px;
+  align-self: flex-end;
+  margin-right: 20px;
+}
+#errorBody p {
+  text-align: initial;
+}
