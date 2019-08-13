@@ -14,4 +14,4 @@ export const ToolsService = {
   remove(toolId) {
     return ApiService.delete(endpoint, toolId);
   }
-}
+};

@@ -1,11 +1,6 @@
 const api = process.env.REACT_APP_API_URL;
 
 export const ApiService = {
-  get(endpoint) {
-    return fetch(`${api}${endpoint}`)
-      .then(resp => resp.json())
-      .catch(err => ({ err }));
-  },
   login(data) {
     return fetch(`${api}login`, {
       headers: {
@@ -20,6 +15,11 @@ export const ApiService = {
         }
         return resp.json();
       })
+      .catch(err => ({ err }));
+  },
+  get(endpoint) {
+    return fetch(`${api}${endpoint}`)
+      .then(resp => resp.json())
       .catch(err => ({ err }));
   },
   post(endpoint, data) {

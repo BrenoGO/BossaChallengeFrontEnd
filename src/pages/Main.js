@@ -47,13 +47,12 @@ export default function App() {
       return setTools(newTools);
     }// name === 'checkSearchTag' - checkbox clicked
 
-    setBoolCheckSearchTag(!boolCheckSearchTag);
-
-    if (boolCheckSearchTag) { // check is false
+    if (boolCheckSearchTag) { // check was true, became false
       newTools = await ToolsService.list(); // get all
-    } else if (searchedTag) { // check were false, became true, and searchedTag isnt ''
+    } else if (searchedTag) { // check was false, became true, and searchedTag isnt '' empty
       newTools = await ToolsService.searchTag(searchedTag);
     }
+    setBoolCheckSearchTag(!boolCheckSearchTag);
     return setTools(newTools);
   }
 
