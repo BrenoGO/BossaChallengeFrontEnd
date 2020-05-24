@@ -80,6 +80,7 @@ export default function App() {
       { boolError && (
       <ErrorModal title="Unauthorized" buttonMessage="Understood" close={closeError}>
         You can&apos;t add a tool while unauthenticated. Please Log In.
+        test User: &quot;Teste&quot;, password: &quot;teste123&quot;
       </ErrorModal>
       )}
       <div id="Main">
@@ -92,7 +93,7 @@ export default function App() {
               id="searchInput"
               onChange={handleSearchChange}
               value={searchedTag}
-              placeholder="Digite a tag procurada"
+              placeholder="Search Tag"
             />
             <label className="labelCheck" htmlFor="searchTagCheckbox">
               <input
